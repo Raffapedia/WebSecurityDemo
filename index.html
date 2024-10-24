@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container" style:"align:center">
+        <h1>Session 7: Web Security Demo</h1>
+        <h2>Personalized for <b><span id="reflxss">no one :(</span></b></h2>
+         <p>EECS Decal, Fall 2024</p>
+      </div>
+    </div>
+    <script type="text/javascript">
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("person")) {
+            document.getElementById("reflxss").innerHTML = urlParams.get("person");
+        }
+    </script>
+
+    <div class="container">
+      <h2><b>Part 1: SQL Injection Demonstration</b></h2>
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+
+          <h3>Todo List Management</h3>
+          <span> Item Name: </span> <input type="text" class="form-control" id="input_item_name">
+          <a class="btn btn-success" role="button" id='add'>Add Item&raquo;</a>
+          <a class="btn btn-danger" role="button" id='delete'>Delete Item&raquo;</a>
+        </div>
+        <div class="col-md-6">
+          <h3>To Do List (database table: "todos")</h3>
+          <div>
+            <ul id='todo_list_view'>
+            </ul>
+          </div>
+       </div>
+      </div>
+
+      <hr>
+    </div> <!-- /container -->
+
+    <br>
+    <br>
+    <div class="container">
+      <h2><b>Part 2: Clickjacking Attack Example</b></h2>
+      <!-- Example row of columns -->
+      <div class="row" style="background-color:lightgray">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-6">
+       </div>
+      </div>
+
+      <a href="https://www.google.com/" onmousedown="window.location='https://en.wikipedia.org/wiki/Clickjacking'">Click this link for google.com</a>
+      <hr>
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2>XSS Demonstration</h2>
+      <p>Here's an (intentionally) broken image loaded via javascript:</p>
+      <div id="imageDiv">Placeholder for image</div>
+      <div class="row">
+        <div class="col-md-4">
+
+
+        <script type="text/javascript">
+          var position = document.URL.indexOf("link=");
+          if (position !== -1) {
+            var name = document.URL.substring(position+5, document.URL.length);
+            name = decodeURIComponent(name);
+            document.getElementById("imageDiv").innerHTML = name
+          } else {
+            document.getElementById("imageDiv").innerHTML = "<img src='https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg' height='200px' width='300px' alt='Image was not able to display'>"
+          }
+        </script>
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>
